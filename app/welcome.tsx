@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Button from "../components/ui/button";
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -13,19 +14,16 @@ export default function WelcomeScreen() {
         গরুর খামার ব্যবস্থাপনা ও ক্রয়-বিক্রয়ের স্মার্ট সমাধান
       </Text>
 
-      <TouchableOpacity
-        style={styles.primaryBtn}
+      <Button
+        title="খামারি হিসেবে শুরু করুন →"
         onPress={() => router.push("/login?role=farmer")}
-      >
-        <Text style={styles.btnText}>খামারি হিসেবে শুরু করুন →</Text>
-      </TouchableOpacity>
+      />
 
-      <TouchableOpacity
-        style={styles.secondaryBtn}
+      <Button
+        title="ক্রেতা হিসেবে শুরু করুন →"
+        type="secondary"
         onPress={() => router.push("/login?role=buyer")}
-      >
-        <Text style={styles.secondaryText}>ক্রেতা হিসেবে শুরু করুন →</Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 }
@@ -51,33 +49,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 40,
     color: "#333",
-  },
-
-  primaryBtn: {
-    backgroundColor: "#0a8f3c",
-    padding: 16,
-    borderRadius: 10,
-    marginBottom: 15,
-    alignItems: "center",
-  },
-
-  secondaryBtn: {
-    borderWidth: 1,
-    borderColor: "#0a8f3c",
-    padding: 16,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-
-  btnText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  secondaryText: {
-    color: "#0a8f3c",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

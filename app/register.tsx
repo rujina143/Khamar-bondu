@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import Button from '../components/ui/button';
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -90,9 +91,14 @@ export default function RegisterScreen() {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+      {/* <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>অ্যাকাউন্ট তৈরি করুন</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      
+      <Button
+        title="অ্যাকাউন্ট তৈরি করুন"
+        onPress={handleRegister}
+      />
 
       {/* Login Link */}
 
@@ -134,18 +140,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 15,
-  },
-
-  button: {
-    backgroundColor: '#1c8f4a',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
   },
 
   loginContainer: {

@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import Button from '../components/ui/button'
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -46,9 +47,11 @@ export default function LoginScreen() {
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>লগইন</Text>
-      </TouchableOpacity>
+      <Button
+        title="লগইন"
+        onPress={handleLogin}
+      />
+
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>নতুন অ্যাকাউন্ট তৈরি করুন।</Text>
 
@@ -79,18 +82,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 15,
-  },
-
-  button: {
-    backgroundColor: 'green',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
   },
 
   loginContainer: {
