@@ -17,23 +17,17 @@ export default function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
-        {/* Left: Hamburger menu */}
-        <TouchableOpacity onPress={onMenuPress} style={styles.iconButton}>
-          <MaterialIcons name="menu" size={28} color="#0a5c2b" />
-        </TouchableOpacity>
-
-        {/* Center: App Name */}
-        <Text style={styles.title}>খামার বন্ধু</Text>
-      </View>
-
-      {/* Right: Notification + Profile */}
+      <Text style={styles.title}>খামার বন্ধু</Text>
+      
+      {/* Right: Notification + Menu */}
       <View style={styles.right}>
         <TouchableOpacity onPress={onNotificationsPress} style={styles.iconButton}>
           <Ionicons name="notifications-outline" size={26} color="#0a5c2b" />
         </TouchableOpacity>
 
-        <Avatar>{userName?.charAt(0) || 'ক'}</Avatar>
+        <TouchableOpacity onPress={onMenuPress} style={styles.iconButton}>
+          <MaterialIcons name="menu" size={28} color="#0a5c2b" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -57,6 +51,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    paddingTop:6,
     fontWeight: 'bold',
     color: '#0a5c2b',
   },
