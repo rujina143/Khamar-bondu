@@ -55,7 +55,7 @@ export default function LoginScreen() {
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>পাসওয়ার্ড ভুলে গেছেন?</Text>
 
-        <TouchableOpacity onPress={() => router.replace(`/reset-pass?role=${role}`)}>
+        <TouchableOpacity onPress={() => router.push(`/reset-pass?role=${role}`)}>
           <Text style={styles.loginLink}>রিসেট করুন</Text>
         </TouchableOpacity>
       </View>
