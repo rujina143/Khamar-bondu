@@ -39,7 +39,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/chat')}
+        onPress={() => router.push('/chat-list')}
       >
         <Ionicons name="chatbubble-outline" size={22} color="#fff" />
         <Text style={styles.text}>চ্যাট</Text>
