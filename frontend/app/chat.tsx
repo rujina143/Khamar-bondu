@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from 'expo-router';
-
+import { KeyboardAvoidingView, Platform } from "react-native";
 import type { NavigationProp } from "@react-navigation/native";
 
 export default function ChatPage({ navigation }: { navigation: NavigationProp<any> }) {
@@ -33,83 +33,81 @@ export default function ChatPage({ navigation }: { navigation: NavigationProp<an
 
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} /> 
+      {/* Chat Header */}
 
-          <Stack.Screen options={{ headerShown: false }} />
-      
-          {/* Chat Header */}
+      <View style={styles.chatHeader}>
+        <View style={{flexDirection:"row"}}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} />
+          </TouchableOpacity>
+          <Text style={styles.name}>{"korim khamari"}</Text>
+        </View>
 
-          <View style={styles.chatHeader}>
-            <View style={{flexDirection:"row"}}>
-              <TouchableOpacity onPress={() => router.back()}>
-                <Ionicons name="arrow-back" size={24} />
-              </TouchableOpacity>
-              <Text style={styles.name}>{"korim khamari"}</Text>
-            </View>
+        <View style={{ flexDirection: "row", gap: 15 }}>
+          <Ionicons name="call-outline" size={22} />
+          <Ionicons name="videocam-outline" size={22} />
+        </View>
+      </View>
 
-            <View style={{ flexDirection: "row", gap: 15 }}>
-              <Ionicons name="call-outline" size={22} />
-              <Ionicons name="videocam-outline" size={22} />
+      {/* Messages */}
+
+      <ScrollView style={styles.messages}>
+        {messages.map((msg) => (
+          <View
+            key={msg.id}
+            style={[
+              styles.messageRow,
+              msg.sender === "me"
+                ? { justifyContent: "flex-end" }
+                : { justifyContent: "flex-start" }
+            ]}
+          >
+            <View
+              style={[
+                styles.messageBubble,
+                msg.sender === "me"
+                  ? styles.myMessage
+                  : styles.otherMessage
+              ]}
+            >
+              <Text
+                style={
+                  msg.sender === "me"
+                    ? { color: "white" }
+                    : { color: "black" }
+                }
+              >
+                {msg.text}
+              </Text>
+
+              <Text style={styles.timeSmall}>{msg.time}</Text>
             </View>
           </View>
+        ))}
+      </ScrollView>
 
-          {/* Messages */}
+      {/* Message Input */}
 
-          <ScrollView style={styles.messages}>
-            {messages.map((msg) => (
-              <View
-                key={msg.id}
-                style={[
-                  styles.messageRow,
-                  msg.sender === "me"
-                    ? { justifyContent: "flex-end" }
-                    : { justifyContent: "flex-start" }
-                ]}
-              >
-                <View
-                  style={[
-                    styles.messageBubble,
-                    msg.sender === "me"
-                      ? styles.myMessage
-                      : styles.otherMessage
-                  ]}
-                >
-                  <Text
-                    style={
-                      msg.sender === "me"
-                        ? { color: "white" }
-                        : { color: "black" }
-                    }
-                  >
-                    {msg.text}
-                  </Text>
+      <View style={styles.inputArea}>
+        <TouchableOpacity>
+          <Ionicons name="attach" size={24} />
+        </TouchableOpacity>
 
-                  <Text style={styles.timeSmall}>{msg.time}</Text>
-                </View>
-              </View>
-            ))}
-          </ScrollView>
+        <TextInput
+          placeholder="মেসেজ লিখুন..."
+          style={styles.input}
+          value={message}
+          onChangeText={setMessage}
+        />
 
-          {/* Message Input */}
-
-          <View style={styles.inputArea}>
-            <TouchableOpacity>
-              <Ionicons name="attach" size={24} />
-            </TouchableOpacity>
-
-            <TextInput
-              placeholder="মেসেজ লিখুন..."
-              style={styles.input}
-              value={message}
-              onChangeText={setMessage}
-            />
-
-            <TouchableOpacity
-              style={styles.sendBtn}
-              onPress={sendMessage}
-            >
-              <Ionicons name="send" size={20} color="white" />
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.sendBtn}
+          onPress={sendMessage}
+        >
+          <Ionicons name="send" size={20} color="white" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
