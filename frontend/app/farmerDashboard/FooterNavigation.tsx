@@ -2,30 +2,32 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router'; // ✅ add
+import { useRouter, usePathname } from 'expo-router';
 
-interface Item {
-  icon: any;
-  label: string;
-  active?: boolean;
-  route?: string; // ✅ add
-}
-
-const FooterNavigation: React.FC = () => {
+const FooterNavigation = () => {
   const insets = useSafeAreaInsets();
-  const router = useRouter(); // ✅ add
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const items: Item[] = [
-    { icon: 'home', label: 'হোম', active: true, route: '/' },
-    { icon: 'paw', label: 'গরু', route: '/farmerDashboard/cows' },
-    { icon: 'leaf', label: 'খাবার', route: '/farmerDashboard/actions/addFood' }, // ✅ main target
+  const items = [
+    { icon: 'home' as const, label: 'হোম', route: '/' },
+    { icon: 'paw' as const, label: 'গরু', route: '/farmerDashboard/cows' },
     {
-      icon: 'medkit',
+      icon: 'leaf' as const,
+      label: 'খাবার',
+      route: '/farmerDashboard/actions/addFood',
+    },
+    {
+      icon: 'medkit' as const,
       label: 'স্বাস্থ্য',
       route: '/farmerDashboard/actions/addMedicine',
     },
-    { icon: 'cart', label: 'মার্কেট', route: '/farmerDashboard/market' },
-    { icon: 'person', label: 'প্রোফাইল', route: '/profile' },
+    {
+      icon: 'cart' as const,
+      label: 'মার্কেট',
+      route: '/farmerDashboard/market',
+    },
+    { icon: 'person' as const, label: 'প্রোফাইল', route: '/profile' },
   ];
 
   return (
@@ -33,28 +35,28 @@ const FooterNavigation: React.FC = () => {
       <View style={styles.topBorder} />
 
       <View style={styles.footer}>
-        {items.map((item, i) => (
-          <TouchableOpacity
-            key={i}
-            style={styles.item}
-            onPress={() => {
-              if (item.route) {
-                router.push(item.route as any); // ✅ navigation
-              }
-            }}
-          >
-            <Ionicons
-              name={item.icon}
-              size={22}
-              color={item.active ? '#1c8f4a' : '#777'}
-            />
-            <Text
-              style={[styles.text, { color: item.active ? '#1c8f4a' : '#777' }]}
+        {items.map((item, i) => {
+          const isActive = pathname === item.route;
+
+          return (
+            <TouchableOpacity
+              key={i}
+              style={styles.item}
+              onPress={() => router.push(item.route as any)}
             >
-              {item.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Ionicons
+                name={item.icon}
+                size={24}
+                color={isActive ? '#1c8f4a' : '#777'}
+              />
+              <Text
+                style={[styles.text, { color: isActive ? '#1c8f4a' : '#777' }]}
+              >
+                {item.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );

@@ -8,10 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useFarm } from '../../context/FarmContext'; // 🔥 context
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFarm } from '../../context/FarmContext';
+import FooterNavigation from '../FooterNavigation';
 
 const AddFood = () => {
-  const { addCost } = useFarm(); // 🔥 main hook
+  const { addCost } = useFarm();
 
   const [selectedGroup, setSelectedGroup] = useState('bachur');
 
@@ -19,90 +21,115 @@ const AddFood = () => {
   const [bran, setBran] = useState('');
   const [feed, setFeed] = useState('');
 
-  // 🔥 cost per kg
+  const [history, setHistory] = useState<any[]>([]);
+
+  // cost per kg
   const grassCost = 2;
   const branCost = 30;
   const feedCost = 40;
 
-  // 🔥 calculation
+  // calculation
   const totalGrass = Number(grass) * grassCost || 0;
   const totalBran = Number(bran) * branCost || 0;
   const totalFeed = Number(feed) * feedCost || 0;
 
   const total = totalGrass + totalBran + totalFeed;
 
-  // 🔄 reset when group changes
+  // 📦 Load history
+  useEffect(() => {
+    loadHistory();
+  }, []);
+
+  const loadHistory = async () => {
+    try {
+      const data = await AsyncStorage.getItem('food_history');
+      if (data) setHistory(JSON.parse(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 💾 Save history
+  useEffect(() => {
+    AsyncStorage.setItem('food_history', JSON.stringify(history));
+  }, [history]);
+
+  // reset form on tab change
   useEffect(() => {
     setGrass('');
     setBran('');
     setFeed('');
   }, [selectedGroup]);
 
-  // 💾 Save handler
+  // save
   const handleSave = () => {
-    const data = {
+    if (total === 0) return;
+
+    addCost(total);
+
+    const newItem = {
+      id: Date.now(),
       group: selectedGroup,
       grass,
       bran,
       feed,
-      totalCost: total,
+      total,
+      date: new Date().toLocaleDateString('bn-BD'),
     };
 
-    console.log('Saved Data:', data);
+    setHistory(prev => [newItem, ...prev]);
 
-    // 🔥 Dashboard এ cost যোগ হবে
-    addCost(total);
-
-    // 🔥 reset after save
     setGrass('');
     setBran('');
     setFeed('');
   };
 
-  // 🎯 dynamic title
   const getTitle = () => {
     if (selectedGroup === 'bachur') return 'বাছুরের খাবার';
     if (selectedGroup === 'gavi') return 'গাভীর খাবার';
-    if (selectedGroup === 'shar') return 'ষাঁড় গরুর খাবার';
+    return 'ষাঁড় গরুর খাবার';
+  };
+
+  const getGroupName = (group: string) => {
+    if (group === 'bachur') return 'বাছুর';
+    if (group === 'gavi') return 'গাভী';
+    return 'ষাঁড়';
   };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Ionicons name="arrow-back" size={22} color="white" />
-        <Text style={styles.headerTitle}>{getTitle()}</Text>
-      </View>
-
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Tabs */}
+        {/* Header */}
+        <View style={styles.header}>
+          <Ionicons name="arrow-back" size={22} color="white" />
+          <Text style={styles.headerTitle}>{getTitle()}</Text>
+        </View>
+
+        {/* 🔥 Tabs */}
         <View style={styles.tabs}>
-          <TouchableOpacity
-            style={[styles.tab, selectedGroup === 'bachur' && styles.activeTab]}
-            onPress={() => setSelectedGroup('bachur')}
-          >
-            <Text style={selectedGroup === 'bachur' && styles.activeText}>
-              বাছুর
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.tab, selectedGroup === 'gavi' && styles.activeTab]}
-            onPress={() => setSelectedGroup('gavi')}
-          >
-            <Text style={selectedGroup === 'gavi' && styles.activeText}>
-              গাভী
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.tab, selectedGroup === 'shar' && styles.activeTab]}
-            onPress={() => setSelectedGroup('shar')}
-          >
-            <Text style={selectedGroup === 'shar' && styles.activeText}>
-              ষাঁড় গরু
-            </Text>
-          </TouchableOpacity>
+          {[
+            { key: 'bachur', label: 'বাছুর' },
+            { key: 'gavi', label: 'গাভী' },
+            { key: 'shar', label: 'ষাঁড়' },
+          ].map(item => (
+            <TouchableOpacity
+              key={item.key}
+              style={[
+                styles.tab,
+                selectedGroup === item.key && styles.activeTab,
+              ]}
+              onPress={() => setSelectedGroup(item.key)}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  selectedGroup === item.key && styles.activeText,
+                ]}
+              >
+                {item.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
 
         {/* Form */}
@@ -164,7 +191,24 @@ const AddFood = () => {
         <TouchableOpacity style={styles.button} onPress={handleSave}>
           <Text style={styles.buttonText}>সংরক্ষণ করুন</Text>
         </TouchableOpacity>
+
+        {/* History */}
+        <View style={styles.historyBox}>
+          <Text style={styles.costTitle}>খাবারের ইতিহাস</Text>
+
+          {history.map(item => (
+            <View key={item.id} style={styles.historyItem}>
+              <Text style={styles.historyText}>
+                {getGroupName(item.group)} - {item.total} টাকা
+              </Text>
+              <Text style={styles.historySub}>{item.date}</Text>
+            </View>
+          ))}
+        </View>
       </ScrollView>
+
+      {/* ✅ Footer */}
+      <FooterNavigation />
     </View>
   );
 };
@@ -175,6 +219,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    paddingBottom: 70, // ✅ footer fix
   },
 
   header: {
@@ -193,19 +238,27 @@ const styles = StyleSheet.create({
 
   tabs: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 15,
+    justifyContent: 'space-between',
+    marginVertical: 20,
+    paddingHorizontal: 10,
   },
 
   tab: {
+    flex: 1,
+    marginHorizontal: 5,
     backgroundColor: '#e5e7eb',
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 20,
+    paddingVertical: 12,
+    borderRadius: 30,
+    alignItems: 'center',
   },
 
   activeTab: {
     backgroundColor: '#2e7d32',
+  },
+
+  tabText: {
+    color: '#333',
+    fontSize: 14,
   },
 
   activeText: {
@@ -220,7 +273,6 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 10,
     marginBottom: 5,
-    fontSize: 13,
   },
 
   input: {
@@ -246,7 +298,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 6,
+    marginBottom: 5,
   },
 
   totalRow: {
@@ -271,5 +323,27 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+
+  historyBox: {
+    margin: 16,
+    backgroundColor: '#fff',
+    padding: 12,
+    borderRadius: 10,
+  },
+
+  historyItem: {
+    padding: 8,
+    borderBottomWidth: 1,
+    borderColor: '#eee',
+  },
+
+  historyText: {
+    fontWeight: 'bold',
+  },
+
+  historySub: {
+    color: '#666',
+    fontSize: 12,
   },
 });
