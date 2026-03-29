@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import Button from './components/button';
+import Button from './../components/button';
 export default function RegisterScreen() {
   const router = useRouter();
   const { role } = useLocalSearchParams();
@@ -34,7 +34,7 @@ export default function RegisterScreen() {
     console.log(userData);
 
     // registration er por login page e jabe
-    router.replace(`/login?role=${role}`);
+    router.replace(`/auth/login?role=${role}`);
   };
 
   return (
@@ -104,7 +104,7 @@ export default function RegisterScreen() {
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>ইতিমধ্যে অ্যাকাউন্ট আছে?</Text>
 
-        <TouchableOpacity onPress={() => router.replace(`/login?role=${role}`)}>
+        <TouchableOpacity onPress={() => router.replace(`/auth/login?role=${role}`)}>
           <Text style={styles.loginLink}>লগইন করুন</Text>
         </TouchableOpacity>
       </View>

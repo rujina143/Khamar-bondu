@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import Button from './components/button';
+import Button from './../components/button';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -22,7 +22,7 @@ export default function LoginScreen() {
     if (role === 'farmer') {
       router.replace('/farmerDashboard'); 
     } else {
-      router.replace('/marketplace'); 
+      router.replace('/buyerDashboard/marketplace'); 
     }
   };
 
@@ -54,7 +54,7 @@ export default function LoginScreen() {
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>পাসওয়ার্ড ভুলে গেছেন?</Text>
         <TouchableOpacity
-          onPress={() => router.push(`/reset-pass?role=${role}`)}
+          onPress={() => router.push(`/auth/reset-pass?role=${role}`)}
         >
           <Text style={styles.loginLink}>রিসেট করুন</Text>
         </TouchableOpacity>
@@ -63,7 +63,7 @@ export default function LoginScreen() {
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>নতুন অ্যাকাউন্ট তৈরি করুন।</Text>
         <TouchableOpacity
-          onPress={() => router.replace(`/register?role=${role}`)}
+          onPress={() => router.replace(`/auth/register?role=${role}`)}
         >
           <Text style={styles.loginLink}>নিবন্ধন করুন</Text>
         </TouchableOpacity>

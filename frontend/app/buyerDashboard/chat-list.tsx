@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from 'expo-router';
 
 import type { NavigationProp } from "@react-navigation/native";
+import FooterNavigation from '../components/footer-matketplace';
 
 export default function ChatPage({ navigation }: { navigation: NavigationProp<any> }) {
   const router = useRouter();
@@ -74,7 +75,7 @@ export default function ChatPage({ navigation }: { navigation: NavigationProp<an
                         <TouchableOpacity
                             key={conv.id}
                             style={styles.conversation}
-                            onPress={() => router.push(`/chat?id=${conv.id}`)}
+                            onPress={() => router.push(`./chat?id=${conv.id}`)}
                         >
 
                             <View style={styles.avatar}>
@@ -109,6 +110,7 @@ export default function ChatPage({ navigation }: { navigation: NavigationProp<an
                 </ScrollView>
             </View>
         </View>
+        <FooterNavigation/>
     </View>
   );
 }

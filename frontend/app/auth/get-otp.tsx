@@ -6,31 +6,35 @@ import Button from '@/app/components/button';
 export default function ResetScreen(){
     const router = useRouter();
     const { role } = useLocalSearchParams();
-    const [phone, setPhone] = useState('');
+    const [otp, setOtp ] = useState('');
 
-    const handleResetPass = ()=>{
-        router.push(`/get-otp?role=${role}`);
+    const handleOpt = ()=>{
+
+        router.push(`/auth/change-password?role=${role}&reset=true`);
     };
 
     return(
         <>
             <View style={styles.container}>
                 <Text style={styles.title}>
-                    {role === 'farmer'
-                    ? 'খামারি পাসওয়ার্ড পুনরুদ্ধার করুন'
-                    : 'ক্রেতা পাসওয়ার্ড পুনরুদ্ধার করুন'}
+                    পাসওয়ার্ড পুনরুদ্ধারের ইমেইলটি সফলভাবে পাঠানো হয়েছে।
+                </Text>
+
+                <Text style={styles.subtitle}>
+                    আপনি ইমেইল এ একটি ওটিপি পেয়েছেন।
                 </Text>
 
                 <TextInput
-                    placeholder="মোবাইল নাম্বার / ইমেইল লিখুন"
+                    placeholder= "ওটিপি লিখুন"
+                    secureTextEntry
                     style={styles.input}
-                    value={phone}
-                    onChangeText={setPhone}
+                    value={otp}
+                    onChangeText={setOtp}
                 />
 
                 <Button
-                    title="রিসেট করুন"
-                    onPress={handleResetPass}
+                    title="জমা দিন"
+                    onPress={handleOpt}
                 />
             </View>
         </>
@@ -52,10 +56,18 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
 
+  subtitle: {
+    fontSize: 16,
+    fontWeight: 'semibold',
+    // textAlign: 'center',
+    marginBottom: 5,
+  },
+
   input: {
     borderWidth: 1,
     padding: 12,
     borderRadius: 8,
     marginBottom: 15,
   },
+
 });

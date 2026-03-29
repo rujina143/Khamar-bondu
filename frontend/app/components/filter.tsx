@@ -66,7 +66,7 @@ export default function Filter() {
     };
 
     console.log(filters);
-    router.replace('/marketplace'); 
+    router.replace('./marketplace'); 
   };
 
   const resetFilter = () => {

@@ -15,7 +15,7 @@ export default function Sidebar() {
       {/* Menu Items */}
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/shop')}
+        onPress={() => router.push('./marketplace')}
       >
         <Ionicons name="storefront-outline" size={22} color="#fff" />
         <Text style={styles.text}>মার্কেটপ্লেস</Text>
@@ -23,7 +23,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/wishlist')}
+        onPress={() => router.push('./wishlist')}
       >
         <Ionicons name="heart-outline" size={22} color="#fff" />
         <Text style={styles.text}>প্রিয় তালিকা</Text>
@@ -31,7 +31,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/orders')}
+        onPress={() => router.push('./myorders')}
       >
         <Ionicons name="cart-outline" size={22} color="#fff" />
         <Text style={styles.text}>আমার অর্ডার</Text>
@@ -39,7 +39,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/chat-list')}
+        onPress={() => router.push('./chat-list')}
       >
         <Ionicons name="chatbubble-outline" size={22} color="#fff" />
         <Text style={styles.text}>চ্যাট</Text>
@@ -47,7 +47,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/notifications')}
+        onPress={() => router.push('./notifications')}
       >
         <Ionicons name="notifications-outline" size={22} color="#fff" />
         <Text style={styles.text}>নোটিফিকেশন</Text>
@@ -55,7 +55,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/settings')}
+        onPress={() => router.push('./settings')}
       >
         <Ionicons name="settings-outline" size={22} color="#fff" />
         <Text style={styles.text}>সেটিংস</Text>
@@ -63,7 +63,7 @@ export default function Sidebar() {
 
       <TouchableOpacity
         style={styles.item}
-        onPress={() => router.push('/logout')}
+        onPress={() => router.push('./logout')}
       >
         <Ionicons name="log-out-outline" size={22} color="red" />
         <Text style={[styles.text, { color: 'red' }]}>লগআউট</Text>

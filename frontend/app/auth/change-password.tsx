@@ -13,7 +13,7 @@ export default function ResetScreen(){
 
     const handleChange = ()=>{
 
-        router.replace(`/login?role=${role}`);
+        router.replace(`/auth/login?role=${role}`);
     };
 
     return(

@@ -7,7 +7,6 @@ import {
   ScrollView
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Button from "./components/button";
 import { Stack, useRouter } from 'expo-router';
 
 
@@ -139,12 +138,14 @@ export default function CattleDetails({ navigation }: { navigation: any }) {
       <View style={styles.bottomBar}>
         <TouchableOpacity 
         style={styles.chatBtn}
-        onPress={()=>{router.push('/chat-list')}}
+        onPress={()=>{router.push('./chat-list')}}
         >
           <Text >চ্যাট</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buyBtn}>
+        <TouchableOpacity style={styles.buyBtn} 
+        onPress={()=>{router.push('./order')}}
+        >
           <Text style={styles.btnText}>অর্ডার করুন</Text>
         </TouchableOpacity>
         

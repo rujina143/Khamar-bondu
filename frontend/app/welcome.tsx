@@ -16,13 +16,13 @@ export default function WelcomeScreen() {
 
       <Button
         title="খামারি হিসেবে শুরু করুন →"
-        onPress={() => router.push("/login?role=farmer")}
+        onPress={() => router.push("/auth/login?role=farmer")}
       />
 
       <Button
         title="ক্রেতা হিসেবে শুরু করুন →"
         type="secondary"
-        onPress={() => router.push("/login?role=buyer")}
+        onPress={() => router.push("/auth/login?role=buyer")}
       />
     </View>
   );

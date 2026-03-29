@@ -56,7 +56,7 @@ const QuickActions: React.FC = () => {
             <TouchableOpacity
               key={i}
               style={styles.item}
-              onPress={() => router.push(a.route)} // ✅ এখন type-safe
+              onPress={() => router.push(a.route as any)} // ✅ এখন type-safe
             >
               <View style={[styles.circle, { backgroundColor: a.color }]}>
                 <Ionicons name={a.icon} size={24} color="#fff" />

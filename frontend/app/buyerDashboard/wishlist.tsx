@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import DashboardHeader from './components/DashboardHeader';
-import Sidebar from '../app/components/Sidebar'; // Sidebar import
-import Filter from './components/filter'; // filter 
+import DashboardHeader from '../components/DashboardHeader';
+import Sidebar from '../components/Sidebar'; // Sidebar import
+import Filter from '../components/filter'; // filter 
+import FooterNavigation from '../components/footer-matketplace';
 
 export default function BuyerDashboard() {
-  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   const [userData, setUserData] = useState(null as any);
   const [showSidebar, setShowSidebar] = useState(false); // sidebar toggle state
@@ -61,41 +61,10 @@ export default function BuyerDashboard() {
       {/* মূল Marketplace content */}
       <ScrollView style={styles.container}>
         <View style={styles.welcome}>
-          <Text style={styles.title}>
-            স্বাগতম, {userData?.name || 'ক্রেতা'}!
-          </Text>
-          <Text style={styles.subtitle}>আপনার পছন্দের গরু খুঁজে নিন</Text>
+          <Text style={styles.title}>আপনার পছন্দের তালিকা</Text>
         </View>
 
-        {/* Search */}
-        <View style={styles.filterCard}>
-      
-          {/* Filter Button */}
-          <TouchableOpacity 
-            style={styles.filterButton}
-            onPress={() => setShowFilter(!showFilter)}
-          >
-            <Ionicons name="filter" size={18} color="#444" />
-            
-            <Text style={styles.filterText}>ফিল্টার</Text>
-          </TouchableOpacity>
-
-          {/* Sort Section */}
-          <View style={styles.sortContainer}>
-            <Text style={styles.filterText}>দাম অনুযায়ী সাজান :  </Text>
-
-            <Picker
-              selectedValue={sort}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSort(itemValue)}
-            >
-              <Picker.Item label="Default" value="default" />
-              <Picker.Item label="Price Low → High" value="priceLow" />
-              <Picker.Item label="Price High → Low" value="priceHigh" />
-            </Picker>
-          </View>
-
-        </View>
+        
 
         {/* Categories */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -113,7 +82,7 @@ export default function BuyerDashboard() {
           <TouchableOpacity
             key={cattle.id}
             style={styles.card}
-            onPress={() => router.push('/cattle-details')}
+            onPress={() => router.push('./cattle-details')}
           >
             <Text style={styles.cow}>🐄</Text>
             <View style={{ flex: 1 }}>
@@ -161,21 +130,7 @@ export default function BuyerDashboard() {
         ))}
       </ScrollView>
 
-      {/* filter overlay */}
-      {showFilter && (
-        <View style={styles.filteroverlay}>
-          {/* background dim layer */}
-          <TouchableOpacity
-            style={styles.overlayBackground}
-            onPress={() => setShowFilter(false)}
-          />
-
-          {/* Filter container */}
-          <View style={styles.filterContainer}>
-            <Filter />
-          </View>
-        </View>
-      )}
+ 
 
       {/* Sidebar overlay */}
       {showSidebar && (
@@ -192,7 +147,7 @@ export default function BuyerDashboard() {
           </View>
         </View>
       )}
-      
+      <FooterNavigation />
     </View>
   );
 }
