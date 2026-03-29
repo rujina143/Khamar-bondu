@@ -8,3 +8,5 @@ export const toBanglaNumber = (num: number | string) => {
     .map(char => (en.includes(char) ? bn[en.indexOf(char)] : char))
     .join('');
 };
+
+export default toBanglaNumber;

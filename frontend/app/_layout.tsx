@@ -4,8 +4,6 @@ import { FarmProvider } from './context/FarmContext'; // 🔥 import add
 export default function RootLayout() {
   return (
     <FarmProvider>
-      {' '}
-      {/* 🔥 wrap করা হয়েছে */}
       <Stack initialRouteName="splash">
         <Stack.Screen name="splash" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

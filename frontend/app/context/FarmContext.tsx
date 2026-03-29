@@ -26,3 +26,5 @@ export const useFarm = () => {
   if (!context) throw new Error('useFarm must be used inside Provider');
   return context;
 };
+
+export default FarmProvider;

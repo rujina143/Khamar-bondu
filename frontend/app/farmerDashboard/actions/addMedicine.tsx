@@ -62,7 +62,7 @@ const AddVaccine = () => {
           {show && (
             <DateTimePicker
               value={date}
-              onChange={(e, d) => {
+              onChange={(e: any, d?: Date) => {
                 setShow(false);
                 if (d) setDate(d);
               }}

@@ -5,11 +5,11 @@ export default function TabsLayout() {
     <Tabs>
       <Tabs.Screen
         name="farmer"
-        options={{ title: 'খামার বন্ধু' }} // 🔥 বাংলা টাইটেল
+        options={{ title: 'খামার বন্ধু' }}
       />
       <Tabs.Screen
         name="buyer"
-        options={{ title: 'ক্রেতা ড্যাশবোর্ড' }} // 🔥 বাংলা টাইটেল
+        options={{ title: 'ক্রেতা ড্যাশবোর্ড' }}
       />
     </Tabs>
   );

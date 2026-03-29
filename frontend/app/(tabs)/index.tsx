@@ -15,14 +15,14 @@ export default function WelcomeScreen() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push('/farmerDashboard')}
+        onPress={() => router.push('/auth/login?role=buyer')}
       >
         <Text style={styles.buttonText}>খামারি হিসেবে শুরু করুন →</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.outlineButton}
-        onPress={() => router.push('/register?role=buyer')}
+        onPress={() => router.push('/auth/login?role=buyer')}
       >
         <Text style={styles.outlineText}>ক্রেতা হিসেবে শুরু করুন →</Text>
       </TouchableOpacity>

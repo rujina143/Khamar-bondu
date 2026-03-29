@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter, usePathname } from 'expo-router';
+import { Ionicons } from "@expo/vector-icons";
+import { usePathname, useRouter } from "expo-router";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const FooterNavigation = () => {
   const insets = useSafeAreaInsets();
@@ -10,8 +10,8 @@ const FooterNavigation = () => {
   const pathname = usePathname();
 
   const items = [
-    { icon: 'home' as const, label: 'হোম', route: '/' },
-    { icon: 'paw' as const, label: 'গরু', route: '/farmerDashboard/cows' },
+    { icon: 'home' as const, label: 'হোম', route: '/farmerDashboard' },
+    { icon: 'paw' as const, label: 'গরু', route: '/farmerDashboard/actions/addCow' },
     {
       icon: 'leaf' as const,
       label: 'খাবার',
@@ -25,11 +25,11 @@ const FooterNavigation = () => {
     {
       icon: 'cart' as const,
       label: 'মার্কেট',
-      route: '/farmerDashboard/market',
+      route: '/farmerDashboard/actions/sellCow',
     },
     { icon: 'person' as const, label: 'প্রোফাইল', route: '/profile' },
   ];
-
+      
   return (
     <View style={[styles.wrapper, { paddingBottom: insets.bottom }]}>
       <View style={styles.topBorder} />
@@ -47,10 +47,10 @@ const FooterNavigation = () => {
               <Ionicons
                 name={item.icon}
                 size={24}
-                color={isActive ? '#1c8f4a' : '#777'}
+                color={isActive ? "#1c8f4a" : "#777"}
               />
               <Text
-                style={[styles.text, { color: isActive ? '#1c8f4a' : '#777' }]}
+                style={[styles.text, { color: isActive ? "#1c8f4a" : "#777" }]}
               >
                 {item.label}
               </Text>
@@ -66,29 +66,29 @@ export default FooterNavigation;
 
 const styles = StyleSheet.create({
   wrapper: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 
   topBorder: {
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: "#e5e7eb",
   },
 
   footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     height: 60,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 
   item: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1,
   },
 
